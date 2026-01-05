@@ -1,0 +1,267 @@
+---
+import "../styles/experience.css";
+import {
+    Briefcase,
+    Laptop,
+    Calendar,
+    MapPin,
+    ChevronRight,
+} from "@lucide/astro";
+
+// Typescript interface for Experience
+interface Experience {
+    id: string;
+    title: string;
+    company: string;
+    location?: string;
+    startDate: string;
+    endDate: string;
+    description: string;
+    technologies: string[];
+    highlights?: string[];
+}
+
+// Work Experience Data
+const workExperience: Experience[] = [
+    {
+        id: "work-1",
+        title: "Desarrollador Web Senior",
+        company: "Tech Solutions",
+        location: "Ciudad de México",
+        startDate: "Enero 2020",
+        endDate: "Presente",
+        description:
+            "Desarrollo y mantenimiento de aplicaciones web utilizando tecnologías modernas. Liderazgo técnico de un equipo de 4 desarrolladores.",
+        technologies: ["React", "Node.js", "MongoDB", "TypeScript", "AWS"],
+        highlights: [
+            "Reduje el tiempo de carga de la app principal en un 40%",
+            "Implementé CI/CD con GitHub Actions",
+            "Mentoría a desarrolladores junior",
+        ],
+    },
+    {
+        id: "work-2",
+        title: "Desarrollador Frontend",
+        company: "Creative Agency",
+        location: "Guadalajara",
+        startDate: "Junio 2017",
+        endDate: "Diciembre 2019",
+        description:
+            "Creación de interfaces de usuario atractivas y funcionales para clientes diversos, asegurando una experiencia de usuario óptima.",
+        technologies: ["HTML5", "CSS3", "JavaScript", "Vue.js", "SASS"],
+        highlights: [
+            "Desarrollé más de 20 sitios web para clientes",
+            "Implementé sistema de diseño reutilizable",
+        ],
+    },
+];
+
+// Freelance Projects Data
+const freelanceProjects: Experience[] = [
+    {
+        id: "freelance-1",
+        title: "E-commerce Platform",
+        company: "Cliente Confidencial",
+        startDate: "Marzo 2023",
+        endDate: "Agosto 2023",
+        description:
+            "Desarrollo completo de una plataforma de comercio electrónico con pasarela de pagos, gestión de inventario y panel de administración.",
+        technologies: ["Next.js", "Stripe", "PostgreSQL", "Tailwind CSS"],
+        highlights: [
+            "Más de 500 productos gestionados",
+            "Integración con múltiples métodos de pago",
+        ],
+    },
+    {
+        id: "freelance-2",
+        title: "Dashboard Analytics",
+        company: "Startup Fintech",
+        startDate: "Octubre 2022",
+        endDate: "Febrero 2023",
+        description:
+            "Diseño y desarrollo de un dashboard interactivo para visualización de datos financieros en tiempo real.",
+        technologies: ["React", "D3.js", "Node.js", "WebSockets"],
+        highlights: [
+            "Visualización de datos en tiempo real",
+            "Reportes exportables en PDF",
+        ],
+    },
+    {
+        id: "freelance-3",
+        title: "App de Reservaciones",
+        company: "Restaurante Local",
+        startDate: "Mayo 2021",
+        endDate: "Julio 2021",
+        description:
+            "Sistema de reservaciones online con confirmación por email y gestión de mesas.",
+        technologies: ["Vue.js", "Firebase", "Vuetify"],
+        highlights: [
+            "Sistema de notificaciones automáticas",
+            "Panel de gestión para el restaurante",
+        ],
+    },
+];
+
+// Calculate years of experience
+const startYear = 2020;
+const currentYear = new Date().getFullYear();
+const yearsOfExperience = currentYear - startYear;
+---
+
+<section class="experience-section" id="experience">
+    <div class="section-header">
+        <h2 class="section-title">Experiencia</h2>
+        <div class="experience-badge glass-card">
+            <Calendar class="icon" />
+            <span>{yearsOfExperience}+ años de experiencia</span>
+        </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs-container">
+        <div class="tabs-header glass-card">
+            <button class="tab-btn active" data-tab="work">
+                <Briefcase class="icon" />
+                <span>Experiencia Laboral</span>
+                <span class="tab-count">{workExperience.length}</span>
+            </button>
+            <button class="tab-btn" data-tab="freelance">
+                <Laptop class="icon" />
+                <span>Proyectos Freelance</span>
+                <span class="tab-count">{freelanceProjects.length}</span>
+            </button>
+        </div>
+
+        <!-- Tab Content: Work Experience -->
+        <div class="tab-content active" id="tab-work">
+            <div class="timeline">
+                {
+                    workExperience.map((exp, index) => (
+                        <article
+                            class="timeline-item glass-card"
+                            style={`--delay: ${index * 0.1}s`}
+                        >
+                            <div class="timeline-marker" />
+                            <div class="timeline-content">
+                                <div class="experience-header">
+                                    <div>
+                                        <h3 class="experience-title">
+                                            {exp.title}
+                                        </h3>
+                                        <p class="experience-company">
+                                            <Briefcase class="icon-sm" />
+                                            {exp.company}
+                                            {exp.location && (
+                                                <span class="experience-location">
+                                                    <MapPin class="icon-sm" />
+                                                    {exp.location}
+                                                </span>
+                                            )}
+                                        </p>
+                                    </div>
+                                    <span class="experience-date">
+                                        <Calendar class="icon-sm" />
+                                        {exp.startDate} - {exp.endDate}
+                                    </span>
+                                </div>
+                                <p class="experience-description">
+                                    {exp.description}
+                                </p>
+                                {exp.highlights && (
+                                    <ul class="experience-highlights">
+                                        {exp.highlights.map((highlight) => (
+                                            <li>
+                                                <ChevronRight class="icon-sm" />
+                                                {highlight}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                )}
+                                <div class="experience-technologies">
+                                    {exp.technologies.map((tech) => (
+                                        <span class="tech-tag">{tech}</span>
+                                    ))}
+                                </div>
+                            </div>
+                        </article>
+                    ))
+                }
+            </div>
+        </div>
+
+        <!-- Tab Content: Freelance Projects -->
+        <div class="tab-content" id="tab-freelance">
+            <div class="timeline">
+                {
+                    freelanceProjects.map((exp, index) => (
+                        <article
+                            class="timeline-item glass-card"
+                            style={`--delay: ${index * 0.1}s`}
+                        >
+                            <div class="timeline-marker freelance" />
+                            <div class="timeline-content">
+                                <div class="experience-header">
+                                    <div>
+                                        <h3 class="experience-title">
+                                            {exp.title}
+                                        </h3>
+                                        <p class="experience-company">
+                                            <Laptop class="icon-sm" />
+                                            {exp.company}
+                                        </p>
+                                    </div>
+                                    <span class="experience-date">
+                                        <Calendar class="icon-sm" />
+                                        {exp.startDate} - {exp.endDate}
+                                    </span>
+                                </div>
+                                <p class="experience-description">
+                                    {exp.description}
+                                </p>
+                                {exp.highlights && (
+                                    <ul class="experience-highlights">
+                                        {exp.highlights.map((highlight) => (
+                                            <li>
+                                                <ChevronRight class="icon-sm" />
+                                                {highlight}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                )}
+                                <div class="experience-technologies">
+                                    {exp.technologies.map((tech) => (
+                                        <span class="tech-tag">{tech}</span>
+                                    ))}
+                                </div>
+                            </div>
+                        </article>
+                    ))
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Tab functionality
+    document.addEventListener("DOMContentLoaded", () => {
+        const tabBtns = document.querySelectorAll(".tab-btn");
+        const tabContents = document.querySelectorAll(".tab-content");
+
+        tabBtns.forEach((btn) => {
+            btn.addEventListener("click", () => {
+                const tabId = btn.getAttribute("data-tab");
+
+                // Remove active class from all buttons and contents
+                tabBtns.forEach((b) => b.classList.remove("active"));
+                tabContents.forEach((c) => c.classList.remove("active"));
+
+                // Add active class to clicked button and corresponding content
+                btn.classList.add("active");
+                document
+                    .getElementById(`tab-${tabId}`)
+                    ?.classList.add("active");
+            });
+        });
+    });
+</script>
