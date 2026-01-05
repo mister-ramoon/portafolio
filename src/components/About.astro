@@ -1,6 +1,14 @@
 ---
 import "../styles/about.css";
-import { Code2, Palette, Rocket } from "@lucide/astro";
+import {
+    Code2,
+    Palette,
+    Rocket,
+    GraduationCap,
+    Calendar,
+    MapPin,
+    Award,
+} from "@lucide/astro";
 
 // Personal Information
 const personalInfo = {
@@ -9,13 +17,43 @@ const personalInfo = {
     bio: `Soy un desarrollador apasionado por crear experiencias digitales únicas y funcionales. 
           Con más de 5 años de experiencia en el desarrollo web, me especializo en construir 
           aplicaciones modernas, escalables y con excelente experiencia de usuario.`,
-    values: [
-        "Código limpio y mantenible",
-        "Diseño centrado en el usuario",
-        "Aprendizaje continuo",
-        "Colaboración efectiva",
-    ],
 };
+
+// Education
+interface Education {
+    id: string;
+    degree: string;
+    institution: string;
+    location?: string;
+    startYear: string;
+    endYear: string;
+    description?: string;
+    achievements?: string[];
+}
+
+const education: Education[] = [
+    {
+        id: "edu-1",
+        degree: "Licenciatura en Ciencias de la Computación",
+        institution: "Universidad Nacional Autónoma de México",
+        startYear: "2013",
+        endYear: "2017",
+    },
+    {
+        id: "edu-2",
+        degree: "Certificación en Desarrollo Full Stack",
+        institution: "Platzi",
+        startYear: "2019",
+        endYear: "2020",
+    },
+    {
+        id: "edu-3",
+        degree: "AWS Certified Developer",
+        institution: "Amazon Web Services",
+        startYear: "2022",
+        endYear: "2022",
+    },
+];
 
 // Skills
 const skills = [
@@ -49,16 +87,6 @@ const skills = [
         items: ["Git", "Docker", "AWS", "Vercel", "Figma", "VS Code"],
     },
 ];
-
-// Interests
-const interests = [
-    "Nuevas tecnologías",
-    "UI/UX Design",
-    "Open Source",
-    "Inteligencia Artificial",
-    "Música",
-    "Fotografía",
-];
 ---
 
 <section class="about-section" id="about">
@@ -81,6 +109,42 @@ const interests = [
             </div>
 
             <p class="bio-text">{personalInfo.bio}</p>
+
+            <!-- Education Section -->
+            <div class="education-section">
+                <h4 class="education-title">
+                    <GraduationCap class="icon" />
+                    Educación
+                </h4>
+                <div class="education-list">
+                    {
+                        education.map((edu, index) => (
+                            <div
+                                class="education-item"
+                                style={`--delay: ${index * 0.1}s`}
+                            >
+                                <div class="education-icon">
+                                    <GraduationCap class="icon-sm" />
+                                </div>
+                                <div class="education-content">
+                                    <div class="education-header">
+                                        <h5 class="education-degree">
+                                            {edu.degree}
+                                        </h5>
+                                        <span class="education-year">
+                                            <Calendar class="icon-xs" />
+                                            {edu.startYear} - {edu.endYear}
+                                        </span>
+                                    </div>
+                                    <p class="education-institution">
+                                        {edu.institution}
+                                    </p>
+                                </div>
+                            </div>
+                        ))
+                    }
+                </div>
+            </div>
         </div>
 
         <!-- Skills Section -->
