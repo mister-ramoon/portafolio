@@ -1,0 +1,263 @@
+---
+import "../styles/projects.css";
+import { Image } from "astro:assets";
+import { ExternalLink, Github, Folder, Star } from "@lucide/astro";
+
+// Import project images
+import ProjectImage from "../assets/image.png";
+
+//  Typescript interface for Project
+interface Project {
+    id: string;
+    title: string;
+    description: string;
+    image?: ImageMetadata;
+    technologies: string[];
+    liveUrl?: string;
+    repoUrl?: string;
+    featured?: boolean;
+    category: "web" | "mobile" | "api" | "other";
+    year: number;
+}
+
+// Projects Data
+const projects: Project[] = [
+    {
+        id: "project-1",
+        title: "E-Commerce Platform",
+        description:
+            "Plataforma de comercio electrónico completa con carrito de compras, pasarela de pagos Stripe, gestión de inventario y panel de administración.",
+        image: ProjectImage,
+        technologies: [
+            "Next.js",
+            "TypeScript",
+            "Stripe",
+            "PostgreSQL",
+            "Tailwind CSS",
+        ],
+        liveUrl: "https://ecommerce-demo.com",
+        repoUrl: "https://github.com/tu-usuario/ecommerce",
+        featured: true,
+        category: "web",
+        year: 2025,
+    },
+    {
+        id: "project-2",
+        title: "Task Management App",
+        description:
+            "Aplicación de gestión de tareas con drag & drop, colaboración en tiempo real, notificaciones y sincronización entre dispositivos.",
+        image: ProjectImage,
+        technologies: ["React", "Node.js", "Socket.io", "MongoDB", "Redis"],
+        liveUrl: "https://taskapp-demo.com",
+        repoUrl: "https://github.com/tu-usuario/taskapp",
+        featured: true,
+        category: "web",
+        year: 2024,
+    },
+    {
+        id: "project-3",
+        title: "Weather Dashboard",
+        description:
+            "Dashboard interactivo con datos meteorológicos en tiempo real, pronósticos de 7 días, mapas interactivos y alertas personalizadas.",
+        image: ProjectImage,
+        technologies: ["Vue.js", "D3.js", "OpenWeather API", "Mapbox"],
+        liveUrl: "https://weather-demo.com",
+        repoUrl: "https://github.com/tu-usuario/weather",
+        featured: false,
+        category: "web",
+        year: 2024,
+    },
+    {
+        id: "project-4",
+        title: "REST API Boilerplate",
+        description:
+            "Template de API REST con autenticación JWT, validación, rate limiting, documentación Swagger y tests automatizados.",
+        image: ProjectImage,
+        technologies: ["Node.js", "Express", "TypeScript", "Jest", "Swagger"],
+        repoUrl: "https://github.com/tu-usuario/api-boilerplate",
+        featured: false,
+        category: "api",
+        year: 2023,
+    },
+    {
+        id: "project-5",
+        title: "Portfolio Website",
+        description:
+            "Sitio web personal con diseño Liquid Glass, animaciones fluidas, modo oscuro y optimización SEO.",
+        image: ProjectImage,
+        technologies: ["Astro", "TypeScript", "CSS3", "Lucide Icons"],
+        liveUrl: "https://tu-portfolio.com",
+        repoUrl: "https://github.com/tu-usuario/portfolio",
+        featured: true,
+        category: "web",
+        year: 2025,
+    },
+    {
+        id: "project-6",
+        title: "Chat Application",
+        description:
+            "Aplicación de chat en tiempo real con salas privadas, compartir archivos, emojis y notificaciones push.",
+        image: ProjectImage,
+        technologies: ["React", "Firebase", "WebRTC", "Tailwind CSS"],
+        liveUrl: "https://chat-demo.com",
+        repoUrl: "https://github.com/tu-usuario/chat-app",
+        featured: false,
+        category: "web",
+        year: 2023,
+    },
+];
+
+// Separate featured and other projects
+const featuredProjects = projects.filter((p) => p.featured);
+const otherProjects = projects.filter((p) => !p.featured);
+---
+
+<section class="projects-section" id="projects">
+    <div class="section-header">
+        <h2 class="section-title">Proyectos</h2>
+        <p class="section-subtitle">
+            Una selección de mis trabajos más recientes
+        </p>
+    </div>
+
+    <!-- Featured Projects -->
+    {
+        featuredProjects.length > 0 && (
+            <div class="featured-projects">
+                <h3 class="subsection-title">
+                    <Star class="icon" />
+                    Proyectos Destacados
+                </h3>
+                <div class="featured-grid">
+                    {featuredProjects.map((project, index) => (
+                        <article
+                            class="project-card featured glass-card"
+                            style={`--delay: ${index * 0.1}s`}
+                        >
+                            <div class="project-image-container">
+                                {project.image ? (
+                                    <Image
+                                        src={project.image}
+                                        alt={`Imagen del proyecto ${project.title}`}
+                                        class="project-image"
+                                        loading="lazy"
+                                    />
+                                ) : (
+                                    <div class="project-image-placeholder">
+                                        <Folder class="placeholder-icon" />
+                                    </div>
+                                )}
+                                <div class="project-overlay">
+                                    <div class="project-links">
+                                        {project.liveUrl && (
+                                            <a
+                                                href={project.liveUrl}
+                                                class="project-link glass-btn"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                aria-label="Ver proyecto en vivo"
+                                            >
+                                                <ExternalLink class="icon" />
+                                            </a>
+                                        )}
+                                        {project.repoUrl && (
+                                            <a
+                                                href={project.repoUrl}
+                                                class="project-link glass-btn"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                aria-label="Ver código en GitHub"
+                                            >
+                                                <Github class="icon" />
+                                            </a>
+                                        )}
+                                    </div>
+                                </div>
+                                <span class="project-year">{project.year}</span>
+                            </div>
+                            <div class="project-content">
+                                <h4 class="project-title">{project.title}</h4>
+                                <p class="project-description">
+                                    {project.description}
+                                </p>
+                                <div class="project-technologies">
+                                    {project.technologies.map((tech) => (
+                                        <span class="tech-tag">{tech}</span>
+                                    ))}
+                                </div>
+                            </div>
+                        </article>
+                    ))}
+                </div>
+            </div>
+        )
+    }
+
+    <!-- Other Projects -->
+    {
+        otherProjects.length > 0 && (
+            <div class="other-projects">
+                <h3 class="subsection-title">
+                    <Folder class="icon" />
+                    Otros Proyectos
+                </h3>
+                <div class="projects-grid">
+                    {otherProjects.map((project, index) => (
+                        <article
+                            class="project-card glass-card"
+                            style={`--delay: ${index * 0.1}s`}
+                        >
+                            <div class="project-card-header">
+                                <Folder class="folder-icon" />
+                                <div class="project-header-links">
+                                    {project.repoUrl && (
+                                        <a
+                                            href={project.repoUrl}
+                                            class="header-link"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            aria-label="Ver código en GitHub"
+                                        >
+                                            <Github class="icon-sm" />
+                                        </a>
+                                    )}
+                                    {project.liveUrl && (
+                                        <a
+                                            href={project.liveUrl}
+                                            class="header-link"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            aria-label="Ver proyecto en vivo"
+                                        >
+                                            <ExternalLink class="icon-sm" />
+                                        </a>
+                                    )}
+                                </div>
+                            </div>
+                            <div class="project-content">
+                                <h4 class="project-title">{project.title}</h4>
+                                <p class="project-description">
+                                    {project.description}
+                                </p>
+                            </div>
+                            <div class="project-footer">
+                                <div class="project-technologies">
+                                    {project.technologies
+                                        .slice(0, 4)
+                                        .map((tech) => (
+                                            <span class="tech-tag small">
+                                                {tech}
+                                            </span>
+                                        ))}
+                                </div>
+                                <span class="project-year-small">
+                                    {project.year}
+                                </span>
+                            </div>
+                        </article>
+                    ))}
+                </div>
+            </div>
+        )
+    }
+</section>
