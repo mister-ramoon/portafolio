@@ -1,0 +1,212 @@
+/* About Section Styles */
+.about-section {
+    padding: var(--spacing-2xl) 0;
+    position: relative;
+}
+
+.about-section .section-header {
+    text-align: center;
+    margin-bottom: var(--spacing-2xl);
+    opacity: 0;
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.about-section .section-title::after {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* About Container */
+.about-container {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: var(--spacing-xl);
+    margin-bottom: var(--spacing-2xl);
+}
+
+/* Bio Card */
+.bio-card {
+    height: fit-content;
+    padding: var(--spacing-xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+    opacity: 0;
+    animation: slideInLeft 0.6s ease-out 0.2s forwards;
+}
+
+.bio-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.bio-avatar {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.2),
+        rgba(var(--secondary-color-rgb), 0.1)
+    );
+    border: 2px solid rgba(var(--primary-color-rgb), 0.3);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+}
+
+.bio-intro {
+    flex: 1;
+}
+
+.bio-name {
+    font-size: 1.5rem;
+    margin-bottom: 4px;
+    background: linear-gradient(
+        135deg,
+        var(--text-color-light),
+        var(--text-muted)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.bio-role {
+    color: var(--primary-color);
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.bio-text {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.8;
+    white-space: pre-line;
+}
+
+.icon-xs {
+    width: 14px;
+    height: 14px;
+    color: var(--primary-color);
+}
+
+/* Skills Section */
+.skills-section {
+    opacity: 0;
+    animation: slideInRight 0.6s ease-out 0.3s forwards;
+}
+
+.skills-main-title {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-size: 1.25rem;
+    margin-bottom: var(--spacing-lg);
+    color: var(--text-color-light);
+}
+
+.skills-main-title .icon {
+    color: var(--primary-color);
+}
+
+.skills-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+/* Skill Card */
+.skill-card {
+    padding: var(--spacing-md) var(--spacing-lg);
+    opacity: 0;
+    animation: fadeInUp 0.5s ease-out calc(var(--delay, 0s) + 0.4s) forwards;
+}
+
+.skill-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+}
+
+.skill-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.2),
+        rgba(var(--secondary-color-rgb), 0.1)
+    );
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.skill-icon .icon {
+    width: 20px;
+    height: 20px;
+    color: var(--primary-color);
+}
+
+.skill-category {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-color-light);
+}
+
+.skill-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+}
+
+.skill-item {
+    padding: 6px 14px;
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.1),
+        rgba(var(--secondary-color-rgb), 0.05)
+    );
+    border: 1px solid rgba(var(--primary-color-rgb), 0.2);
+    border-radius: var(--radius-full);
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--primary-color);
+    transition: all var(--transition-fast);
+}
+
+.skill-item:hover {
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.2),
+        rgba(var(--secondary-color-rgb), 0.1)
+    );
+    border-color: rgba(var(--primary-color-rgb), 0.4);
+    transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 968px) {
+    .about-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .about-section {
+        padding: var(--spacing-xl) 0;
+    }
+
+    .bio-card {
+        padding: var(--spacing-md);
+    }
+
+    .bio-header {
+        flex-direction: column;
+        text-align: center;
+    }
+}

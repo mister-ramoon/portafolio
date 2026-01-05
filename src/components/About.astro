@@ -1,0 +1,127 @@
+---
+import "../styles/about.css";
+import { Code2, Palette, Rocket } from "@lucide/astro";
+
+// Personal Information
+const personalInfo = {
+    name: "Ramón Ruiz",
+    role: "Desarrollador Web Full Stack",
+    bio: `Soy un desarrollador apasionado por crear experiencias digitales únicas y funcionales. 
+          Con más de 5 años de experiencia en el desarrollo web, me especializo en construir 
+          aplicaciones modernas, escalables y con excelente experiencia de usuario.`,
+    values: [
+        "Código limpio y mantenible",
+        "Diseño centrado en el usuario",
+        "Aprendizaje continuo",
+        "Colaboración efectiva",
+    ],
+};
+
+// Skills
+const skills = [
+    {
+        category: "Frontend",
+        icon: "palette",
+        items: [
+            "React",
+            "Vue.js",
+            "Astro",
+            "TypeScript",
+            "Tailwind CSS",
+            "SASS",
+        ],
+    },
+    {
+        category: "Backend",
+        icon: "code",
+        items: [
+            "Node.js",
+            "Express",
+            "Python",
+            "PostgreSQL",
+            "MongoDB",
+            "GraphQL",
+        ],
+    },
+    {
+        category: "Herramientas",
+        icon: "rocket",
+        items: ["Git", "Docker", "AWS", "Vercel", "Figma", "VS Code"],
+    },
+];
+
+// Interests
+const interests = [
+    "Nuevas tecnologías",
+    "UI/UX Design",
+    "Open Source",
+    "Inteligencia Artificial",
+    "Música",
+    "Fotografía",
+];
+---
+
+<section class="about-section" id="about">
+    <div class="section-header">
+        <h2 class="section-title">Sobre Mí</h2>
+        <p class="section-subtitle">Conoce un poco más sobre quién soy</p>
+    </div>
+
+    <div class="about-container">
+        <!-- Bio Card -->
+        <div class="bio-card glass-card">
+            <div class="bio-header">
+                <div class="bio-avatar">
+                    <span class="avatar-emoji">👨‍💻</span>
+                </div>
+                <div class="bio-intro">
+                    <h3 class="bio-name">{personalInfo.name}</h3>
+                    <p class="bio-role">{personalInfo.role}</p>
+                </div>
+            </div>
+
+            <p class="bio-text">{personalInfo.bio}</p>
+        </div>
+
+        <!-- Skills Section -->
+        <div class="skills-section">
+            <h3 class="skills-main-title">
+                <Code2 class="icon" />
+                Habilidades
+            </h3>
+
+            <div class="skills-grid">
+                {
+                    skills.map((skillGroup, index) => (
+                        <div
+                            class="skill-card glass-card"
+                            style={`--delay: ${index * 0.1}s`}
+                        >
+                            <div class="skill-header">
+                                <div class="skill-icon">
+                                    {skillGroup.icon === "palette" && (
+                                        <Palette class="icon" />
+                                    )}
+                                    {skillGroup.icon === "code" && (
+                                        <Code2 class="icon" />
+                                    )}
+                                    {skillGroup.icon === "rocket" && (
+                                        <Rocket class="icon" />
+                                    )}
+                                </div>
+                                <h4 class="skill-category">
+                                    {skillGroup.category}
+                                </h4>
+                            </div>
+                            <div class="skill-items">
+                                {skillGroup.items.map((item) => (
+                                    <span class="skill-item">{item}</span>
+                                ))}
+                            </div>
+                        </div>
+                    ))
+                }
+            </div>
+        </div>
+    </div>
+</section>

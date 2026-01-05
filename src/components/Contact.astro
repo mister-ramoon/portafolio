@@ -1,0 +1,139 @@
+---
+import "../styles/contact.css";
+import {
+    Mail,
+    MapPin,
+    Phone,
+    Linkedin,
+    Github,
+    Send,
+    MessageCircle,
+    ArrowUpRight,
+} from "@lucide/astro";
+
+// Contact Information
+const contactInfo = {
+    email: "ramonruiz@example.com",
+    phone: "+52 123 456 7890",
+    location: "Ciudad de México, México",
+    availability: "Disponible para trabajar",
+};
+
+// Social Links
+const socialLinks = [
+    {
+        name: "LinkedIn",
+        url: "https://linkedin.com/in/tu-usuario",
+        icon: "linkedin",
+        color: "#0077b5",
+    },
+    {
+        name: "GitHub",
+        url: "https://github.com/tu-usuario",
+        icon: "github",
+        color: "#6e5494",
+    },
+    {
+        name: "WhatsApp",
+        url: "https://wa.me/521234567890",
+        icon: "whatsapp",
+        color: "#25d366",
+    },
+];
+---
+
+<section class="contact-section" id="contact">
+    <div class="section-header">
+        <h2 class="section-title">Contacto</h2>
+        <p class="section-subtitle">¡Hablemos!</p>
+    </div>
+
+    <div class="contact-container">
+        <!-- Contact Info -->
+        <div class="contact-info">
+            <div class="info-card glass-card">
+                <h3 class="info-title">Información de Contacto</h3>
+                <p class="info-description">
+                    No dudes en contactarme para colaboraciones, proyectos
+                    freelance o simplemente para saludar. Respondo en menos de
+                    24 horas.
+                </p>
+                <div class="info-items">
+                    <a href={`mailto:${contactInfo.email}`} class="info-item">
+                        <div class="info-icon">
+                            <Mail class="icon" />
+                        </div>
+                        <div class="info-content">
+                            <span class="info-label">Email</span>
+                            <span class="info-value">{contactInfo.email}</span>
+                        </div>
+                        <ArrowUpRight class="arrow-icon" />
+                    </a>
+
+                    <a
+                        href={`tel:${contactInfo.phone.replace(/\s/g, "")}`}
+                        class="info-item"
+                    >
+                        <div class="info-icon">
+                            <Phone class="icon" />
+                        </div>
+                        <div class="info-content">
+                            <span class="info-label">Teléfono</span>
+                            <span class="info-value">{contactInfo.phone}</span>
+                        </div>
+                        <ArrowUpRight class="arrow-icon" />
+                    </a>
+
+                    <div class="info-item no-hover">
+                        <div class="info-icon">
+                            <MapPin class="icon" />
+                        </div>
+                        <div class="info-content">
+                            <span class="info-label">Ubicación</span>
+                            <span class="info-value"
+                                >{contactInfo.location}</span
+                            >
+                        </div>
+                    </div>
+                </div>
+
+                <div class="social-links">
+                    <p class="social-title">Sígueme en redes</p>
+                    <div class="social-icons">
+                        {
+                            socialLinks.map((social) => (
+                                <a
+                                    href={social.url}
+                                    class="social-link glass-btn"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label={`Visitar ${social.name}`}
+                                    style={`--social-color: ${social.color}`}
+                                >
+                                    {social.icon === "linkedin" && (
+                                        <Linkedin class="icon" />
+                                    )}
+                                    {social.icon === "github" && (
+                                        <Github class="icon" />
+                                    )}
+                                    {social.icon === "whatsapp" && (
+                                        <MessageCircle class="icon" />
+                                    )}
+                                </a>
+                            ))
+                        }
+                    </div>
+                </div>
+
+                <!-- Decorative elements -->
+                <div class="info-decoration"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Status Badge -->
+    <div class="availability-badge glass-card">
+        <span class="pulse-dot"></span>
+        {contactInfo.availability}
+    </div>
+</section>
