@@ -1,21 +1,445 @@
 /* Global CSS Variables */
 :root {
-    ---primary-color: #1dcd9f;
-    ---secondary-color: #169976;
-    ---background-white: #f5f5f5;
-    ---background-dark: #222222;
-    ---text-color-light: #f5f5f5;
-    ---text-color-dark: #222222;
-    ---font-family-sans: 'Sora', sans-serif;
-    ---font-family-display: 'Quicksand', sans-serif;
+    /* Colors */
+    --primary-color: #1dcd9f;
+    --primary-color-rgb: 29, 205, 159;
+    --secondary-color: #169976;
+    --secondary-color-rgb: 22, 153, 118;
+    --accent-color: #00d4aa;
+    --accent-color-rgb: 0, 212, 170;
+
+    /* Backgrounds */
+    --background-light: #f0f4f8;
+    --background-dark: #0a0a0f;
+    --background-gradient: linear-gradient(
+        135deg,
+        #0a0a0f 0%,
+        #1a1a2e 50%,
+        #0f0f1a 100%
+    );
+
+    /* Text */
+    --text-color-light: #f5f5f5;
+    --text-color-dark: #222222;
+    --text-muted: rgba(255, 255, 255, 0.7);
+
+    /* Fonts */
+    --font-family-sans: "Sora", sans-serif;
+    --font-family-display: "Quicksand", sans-serif;
+
+    /* Glass Effect */
+    --glass-background: rgba(255, 255, 255, 0.05);
+    --glass-background-hover: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-border-hover: rgba(255, 255, 255, 0.2);
+    --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    --glass-shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.4);
+    --glass-blur: blur(20px);
+    --glass-blur-strong: blur(40px);
+
+    /* Neomorphism */
+    --neo-shadow-light: rgba(255, 255, 255, 0.05);
+    --neo-shadow-dark: rgba(0, 0, 0, 0.5);
+    --neo-inset-shadow:
+        inset 0 2px 4px rgba(255, 255, 255, 0.1),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+
+    /* Spacing */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
+    --spacing-2xl: 4rem;
+
+    /* Border Radius */
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-xl: 32px;
+    --radius-full: 9999px;
+
+    /* Transitions */
+    --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
 /* Global Styles */
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 body {
-    margin: 0;
-    padding: 0;
+    font-family: var(--font-family-sans);
+    background: var(--background-gradient);
+    color: var(--text-color-light);
+    min-height: 100vh;
+    line-height: 1.6;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Animated Background Orbs */
+body::before,
+body::after {
+    content: "";
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.3;
+    z-index: -1;
+    animation: float 20s ease-in-out infinite;
+}
+
+body::before {
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(
+        circle,
+        rgba(var(--primary-color-rgb), 0.4) 0%,
+        transparent 70%
+    );
+    top: -200px;
+    right: -200px;
+    animation-delay: 0s;
+}
+
+body::after {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(
+        circle,
+        rgba(var(--secondary-color-rgb), 0.3) 0%,
+        transparent 70%
+    );
+    bottom: -150px;
+    left: -150px;
+    animation-delay: -10s;
+}
+
+@keyframes float {
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+    25% {
+        transform: translate(30px, -30px) scale(1.05);
+    }
+    50% {
+        transform: translate(-20px, 20px) scale(0.95);
+    }
+    75% {
+        transform: translate(-30px, -20px) scale(1.02);
+    }
+}
+
+/* Glass Card Base */
+.glass-card {
+    background: var(--glass-background);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--glass-shadow);
+    transition: all var(--transition-base);
+}
+
+.glass-card:hover {
+    background: var(--glass-background-hover);
+    border-color: var(--glass-border-hover);
+    box-shadow: var(--glass-shadow-hover);
+    transform: translateY(-4px);
+}
+
+/* Neomorphic Elements */
+.neo-element {
+    background: linear-gradient(
+        145deg,
+        rgba(255, 255, 255, 0.05),
+        rgba(0, 0, 0, 0.1)
+    );
+    border-radius: var(--radius-md);
+    box-shadow:
+        8px 8px 16px var(--neo-shadow-dark),
+        -8px -8px 16px var(--neo-shadow-light);
+    transition: all var(--transition-base);
+}
+
+.neo-element:hover {
+    box-shadow:
+        12px 12px 24px var(--neo-shadow-dark),
+        -12px -12px 24px var(--neo-shadow-light);
+}
+
+/* Glass Button */
+.glass-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: var(--glass-background);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-full);
+    color: var(--text-color-light);
+    font-family: var(--font-family-sans);
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all var(--transition-base);
+    position: relative;
+    overflow: hidden;
+}
+
+.glass-btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.1),
+        transparent
+    );
+    transition: left var(--transition-slow);
+}
+
+.glass-btn:hover {
+    background: var(--glass-background-hover);
+    border-color: var(--glass-border-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(var(--primary-color-rgb), 0.2);
+}
+
+.glass-btn:hover::before {
+    left: 100%;
+}
+
+.glass-btn:active {
+    transform: translateY(0);
+    box-shadow: var(--neo-inset-shadow);
+}
+
+/* Primary Button Variant */
+.glass-btn-primary {
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.3),
+        rgba(var(--secondary-color-rgb), 0.2)
+    );
+    border-color: rgba(var(--primary-color-rgb), 0.4);
+}
+
+.glass-btn-primary:hover {
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.5),
+        rgba(var(--secondary-color-rgb), 0.3)
+    );
+    border-color: rgba(var(--primary-color-rgb), 0.6);
+    box-shadow: 0 8px 32px rgba(var(--primary-color-rgb), 0.3);
+}
+
+/* Status Badge */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background: rgba(var(--primary-color-rgb), 0.15);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid rgba(var(--primary-color-rgb), 0.3);
+    border-radius: var(--radius-full);
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--primary-color);
+}
+
+.status-badge::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.5;
+        transform: scale(1.2);
+    }
+}
+
+/* Typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--font-family-display);
+    font-weight: 700;
+    line-height: 1.2;
+    background: linear-gradient(
+        135deg,
+        var(--text-color-light) 0%,
+        var(--text-muted) 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+}
+
+h2 {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+p {
+    color: var(--text-muted);
+    font-size: clamp(1rem, 2vw, 1.125rem);
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+a:hover {
+    color: var(--accent-color);
+}
+
+/* Icon Styles */
+.icon {
+    width: 20px;
+    height: 20px;
+    stroke-width: 2;
+    transition: transform var(--transition-fast);
+}
+
+.glass-btn:hover .icon {
+    transform: scale(1.1);
+}
+
+/* Main Container */
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-lg);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn var(--transition-slow) ease-out forwards;
+}
+
+.animate-fade-in-up {
+    animation: fadeInUp var(--transition-slow) ease-out forwards;
+}
+
+.animate-slide-left {
+    animation: slideInLeft var(--transition-slow) ease-out forwards;
+}
+
+.animate-slide-right {
+    animation: slideInRight var(--transition-slow) ease-out forwards;
+}
+
+/* Animation Delays */
+.delay-100 {
+    animation-delay: 0.1s;
+}
+.delay-200 {
+    animation-delay: 0.2s;
+}
+.delay-300 {
+    animation-delay: 0.3s;
+}
+.delay-400 {
+    animation-delay: 0.4s;
+}
+.delay-500 {
+    animation-delay: 0.5s;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    main {
+        padding: var(--spacing-md);
+    }
+
+    body::before,
+    body::after {
+        opacity: 0.2;
+    }
 }

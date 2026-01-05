@@ -1,0 +1,63 @@
+---
+import Image from "astro/components/Image.astro";
+import ProfilePic from "../assets/profile-pic.jpg";
+import { Download, Linkedin, Github } from "@lucide/astro";
+import "../styles/profile.css";
+
+// Links of social media and CV
+const LINKEDIN_URL = "https://linkedin.com/in/tu-usuario";
+const GITHUB_URL = "https://github.com/tu-usuario";
+const CV_URL = "/cv-ramon-ruiz.pdf";
+---
+
+<section class="profile-section">
+    <div class="profile-content">
+        <span class="profile-greeting">👋 Bienvenido</span>
+        <h1 class="profile-title">
+            Hola, soy <br />
+            <span class="highlight">Ramón Ruiz</span>
+        </h1>
+        <p class="profile-description">
+            Desarrollador Web apasionado por crear experiencias digitales
+            únicas. Bienvenido a mi sitio web personal, donde comparto mis
+            proyectos, habilidades y experiencia en desarrollo web.
+        </p>
+        <div class="profile-actions">
+            <a href={CV_URL} class="glass-btn glass-btn-primary" download>
+                <Download class="icon" />
+                Descargar CV
+            </a>
+            <a
+                href={LINKEDIN_URL}
+                class="glass-btn btn-linkedin"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                <Linkedin class="icon" />
+                LinkedIn
+            </a>
+            <a
+                href={GITHUB_URL}
+                class="glass-btn btn-github"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                <Github class="icon" />
+                GitHub
+            </a>
+        </div>
+    </div>
+    <div class="profile-image-container">
+        <div class="profile-image-wrapper">
+            <Image
+                src={ProfilePic}
+                alt="Foto de perfil de Ramón Ruiz"
+                class="profile-image"
+                loading="eager"
+            />
+        </div>
+        <span class="status-badge profile-status">
+            Disponible para trabajar
+        </span>
+    </div>
+</section>
