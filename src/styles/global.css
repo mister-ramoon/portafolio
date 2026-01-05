@@ -1,0 +1,21 @@
+/* Global CSS Variables */
+:root {
+    ---primary-color: #1dcd9f;
+    ---secondary-color: #169976;
+    ---background-white: #f5f5f5;
+    ---background-dark: #222222;
+    ---text-color-light: #f5f5f5;
+    ---text-color-dark: #222222;
+    ---font-family-sans: 'Sora', sans-serif;
+    ---font-family-display: 'Quicksand', sans-serif;
+}
+
+/* Global Styles */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
