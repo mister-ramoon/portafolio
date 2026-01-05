@@ -1,0 +1,173 @@
+---
+import "../styles/header.css";
+import { Menu, X } from "@lucide/astro";
+import Image from "astro/components/Image.astro";
+import LogoImg from "../assets/logo.svg";
+
+// Navigation Items
+interface NavItem {
+    label: string;
+    href: string;
+    id: string;
+}
+
+// Define navigation items
+const navItems: NavItem[] = [
+    { label: "Inicio", href: "#profile", id: "profile" },
+    { label: "Experiencia", href: "#experience", id: "experience" },
+    { label: "Proyectos", href: "#projects", id: "projects" },
+    { label: "Sobre Mí", href: "#about", id: "about" },
+    { label: "Contacto", href: "#contact", id: "contact" },
+];
+---
+
+<header class="header" id="header">
+    <div class="header-container">
+        <!-- Logo -->
+        <a href="#" class="header-logo">
+            <Image src={LogoImg} alt="Logo de Ramón Ruiz" class="logo-img" />
+        </a>
+
+        <!-- Desktop Navigation -->
+        <nav class="header-nav" id="header-nav">
+            <ul class="nav-list">
+                {
+                    navItems.map((item) => (
+                        <li class="nav-item">
+                            <a
+                                href={item.href}
+                                class="nav-link"
+                                data-section={item.id}
+                            >
+                                {item.label}
+                            </a>
+                        </li>
+                    ))
+                }
+            </ul>
+        </nav>
+
+        <!-- Mobile Menu Button -->
+        <button
+            class="menu-toggle"
+            id="menu-toggle"
+            aria-label="Abrir menú"
+            aria-expanded="false"
+        >
+            <Menu class="menu-icon icon-open" />
+            <X class="menu-icon icon-close" />
+        </button>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <nav class="mobile-nav" id="mobile-nav">
+        <ul class="mobile-nav-list">
+            {
+                navItems.map((item, index) => (
+                    <li
+                        class="mobile-nav-item"
+                        style={`--delay: ${index * 0.05}s`}
+                    >
+                        <a
+                            href={item.href}
+                            class="mobile-nav-link"
+                            data-section={item.id}
+                        >
+                            {item.label}
+                        </a>
+                    </li>
+                ))
+            }
+        </ul>
+    </nav>
+</header>
+
+<!-- Spacer para compensar el header sticky -->
+<div class="header-spacer"></div>
+
+<script>
+    // Variables
+    const header = document.getElementById("header");
+    const menuToggle = document.getElementById("menu-toggle");
+    const navLinks = document.querySelectorAll(".nav-link, .mobile-nav-link");
+    const sections = document.querySelectorAll("section[id]");
+
+    // Toggle mobile menu
+    menuToggle?.addEventListener("click", () => {
+        const isOpen = header?.classList.toggle("menu-open");
+        menuToggle.setAttribute("aria-expanded", String(isOpen));
+
+        // Prevent body scroll when menu is open
+        document.body.style.overflow = isOpen ? "hidden" : "";
+    });
+
+    // Close mobile menu on link click
+    navLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+            header?.classList.remove("menu-open");
+            menuToggle?.setAttribute("aria-expanded", "false");
+            document.body.style.overflow = "";
+        });
+    });
+
+    // Close menu on escape key
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && header?.classList.contains("menu-open")) {
+            header.classList.remove("menu-open");
+            menuToggle?.setAttribute("aria-expanded", "false");
+            document.body.style.overflow = "";
+        }
+    });
+
+    // Active section detection on scroll
+    const observerOptions = {
+        root: null,
+        rootMargin: "-20% 0px -60% 0px",
+        threshold: 0,
+    };
+
+    const observerCallback = (entries: IntersectionObserverEntry[]) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                const sectionId = entry.target.getAttribute("id");
+
+                // Remove active class from all links
+                navLinks.forEach((link) => {
+                    link.classList.remove("active");
+                });
+
+                // Add active class to matching links
+                navLinks.forEach((link) => {
+                    if (link.getAttribute("data-section") === sectionId) {
+                        link.classList.add("active");
+                    }
+                });
+            }
+        });
+    };
+
+    const observer = new IntersectionObserver(
+        observerCallback,
+        observerOptions,
+    );
+
+    sections.forEach((section) => {
+        observer.observe(section);
+    });
+
+    // Header background on scroll
+    let lastScroll = 0;
+
+    window.addEventListener("scroll", () => {
+        const currentScroll = window.scrollY;
+
+        // Add/remove scrolled class
+        if (currentScroll > 50) {
+            header?.classList.add("scrolled");
+        } else {
+            header?.classList.remove("scrolled");
+        }
+
+        lastScroll = currentScroll;
+    });
+</script>
