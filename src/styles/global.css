@@ -443,3 +443,136 @@ main {
         opacity: 0.2;
     }
 }
+
+/* ==========================================
+   Lenis Smooth Scroll Styles
+   ========================================== */
+html.lenis,
+html.lenis body {
+    height: auto;
+}
+
+.lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+    overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+    pointer-events: none;
+}
+
+/* ==========================================
+   GSAP Initial States - Elements start hidden
+   ========================================== */
+.profile-greeting,
+.profile-title,
+.profile-description {
+    opacity: 0;
+}
+
+.profile-greeting {
+    transform: translateX(-20px);
+}
+
+.profile-title,
+.profile-description {
+    transform: translateY(20px);
+}
+
+.profile-actions .glass-btn {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.status-badge {
+    opacity: 0;
+    transform: scale(0.8);
+}
+
+.timeline-item {
+    opacity: 0;
+    transform: translateX(-30px);
+}
+
+.project-card {
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.skill-item {
+    opacity: 0;
+    transform: scale(0.8);
+}
+
+.tech-tag {
+    opacity: 0;
+    transform: scale(0.8);
+}
+
+.education-item {
+    opacity: 0;
+    transform: translateX(-20px);
+}
+
+.info-item {
+    opacity: 0;
+    transform: translateX(-20px);
+}
+
+.contact-info {
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.availability-badge {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.social-link {
+    opacity: 0;
+    transform: scale(0.8);
+}
+
+/* Disable CSS animations when GSAP is handling them */
+.profile-content,
+.profile-image-container,
+.bio-card,
+.skill-card,
+.project-card.featured,
+.projects-grid .project-card,
+.timeline-item,
+.education-item,
+.info-item,
+.contact-info,
+.contact-form-container,
+.availability-badge {
+    animation: none !important;
+}
+
+/* Keep hover animations working */
+.glass-card:hover,
+.glass-btn:hover,
+.nav-link:hover,
+.tech-tag:hover,
+.skill-item:hover {
+    transition: all var(--transition-base);
+}
+
+/* Header Spacer */
+.header-spacer {
+    height: 80px;
+}
+
+@media (max-width: 768px) {
+    .header-spacer {
+        height: 70px;
+    }
+}

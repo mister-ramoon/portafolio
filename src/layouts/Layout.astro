@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import Header from "../components/Header.astro";
 ---
 
 <!doctype html>
@@ -22,8 +23,410 @@ import "../styles/global.css";
         <title>Ramón Ruiz - Portfolio</title>
     </head>
     <body>
+        <Header />
+        <div class="header-spacer"></div>
         <main>
             <slot />
         </main>
+
+        <!-- GSAP & Lenis Initialization -->
+        <script>
+            import Lenis from "lenis";
+            import { gsap } from "gsap";
+            import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+            // Register GSAP plugins
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Initialize Lenis for smooth scrolling
+            const lenis = new Lenis({
+                duration: 1.2,
+                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                orientation: "vertical",
+                gestureOrientation: "vertical",
+                smoothWheel: true,
+                wheelMultiplier: 1,
+                touchMultiplier: 2,
+            });
+
+            // Connect Lenis to GSAP ScrollTrigger
+            lenis.on("scroll", ScrollTrigger.update);
+
+            // Add Lenis to GSAP ticker
+            gsap.ticker.add((time) => {
+                lenis.raf(time * 1000);
+            });
+
+            // Disable GSAP's lag smoothing
+            gsap.ticker.lagSmoothing(0);
+
+            // Make lenis globally available
+            (window as any).lenis = lenis;
+
+            // Handle anchor clicks for smooth scroll
+            document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+                anchor.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    const href = anchor.getAttribute("href");
+                    if (href) {
+                        const target = document.querySelector(href);
+                        if (target) {
+                            lenis.scrollTo(target as HTMLElement, {
+                                offset: -80,
+                                duration: 1.5,
+                            });
+                        }
+                    }
+                });
+            });
+
+            // ==========================================
+            // GSAP Animations
+            // ==========================================
+
+            // Wait for DOM to be ready
+            document.addEventListener("DOMContentLoaded", () => {
+                // Set initial states
+                gsap.set(".profile-content, .profile-image-container", {
+                    opacity: 0,
+                    y: 50,
+                });
+
+                gsap.set(".glass-card", {
+                    opacity: 0,
+                    y: 30,
+                });
+
+                gsap.set(".section-header", {
+                    opacity: 0,
+                    y: 30,
+                });
+
+                // Profile Section Animation (immediate on load)
+                const profileTl = gsap.timeline({ delay: 0.3 });
+
+                profileTl
+                    .to(".profile-content", {
+                        opacity: 1,
+                        y: 0,
+                        duration: 1,
+                        ease: "power3.out",
+                    })
+                    .to(
+                        ".profile-image-container",
+                        {
+                            opacity: 1,
+                            y: 0,
+                            duration: 1,
+                            ease: "power3.out",
+                        },
+                        "-=0.7",
+                    )
+                    .to(
+                        ".profile-greeting",
+                        {
+                            opacity: 1,
+                            x: 0,
+                            duration: 0.6,
+                            ease: "power2.out",
+                        },
+                        "-=0.5",
+                    )
+                    .to(
+                        ".profile-title",
+                        {
+                            opacity: 1,
+                            y: 0,
+                            duration: 0.8,
+                            ease: "power2.out",
+                        },
+                        "-=0.4",
+                    )
+                    .to(
+                        ".profile-description",
+                        {
+                            opacity: 1,
+                            y: 0,
+                            duration: 0.6,
+                            ease: "power2.out",
+                        },
+                        "-=0.3",
+                    )
+                    .to(
+                        ".profile-actions .glass-btn",
+                        {
+                            opacity: 1,
+                            y: 0,
+                            duration: 0.5,
+                            stagger: 0.1,
+                            ease: "power2.out",
+                        },
+                        "-=0.3",
+                    )
+                    .to(
+                        ".status-badge",
+                        {
+                            opacity: 1,
+                            scale: 1,
+                            duration: 0.5,
+                            ease: "back.out(1.7)",
+                        },
+                        "-=0.2",
+                    );
+
+                // Section Headers Animation
+                gsap.utils.toArray(".section-header").forEach((header: any) => {
+                    gsap.to(header, {
+                        scrollTrigger: {
+                            trigger: header,
+                            start: "top 85%",
+                            toggleActions: "play none none reverse",
+                        },
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.8,
+                        ease: "power3.out",
+                    });
+                });
+
+                // Glass Cards Animation with ScrollTrigger
+                gsap.utils.toArray(".glass-card").forEach((card: any, i) => {
+                    gsap.to(card, {
+                        scrollTrigger: {
+                            trigger: card,
+                            start: "top 85%",
+                            toggleActions: "play none none reverse",
+                        },
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.8,
+                        delay: i * 0.05,
+                        ease: "power3.out",
+                    });
+                });
+
+                // Timeline Items Animation
+                gsap.utils.toArray(".timeline-item").forEach((item: any, i) => {
+                    gsap.to(item, {
+                        scrollTrigger: {
+                            trigger: item,
+                            start: "top 85%",
+                            toggleActions: "play none none reverse",
+                        },
+                        opacity: 1,
+                        x: 0,
+                        duration: 0.8,
+                        delay: i * 0.1,
+                        ease: "power3.out",
+                    });
+                });
+
+                // Project Cards Stagger Animation
+                ScrollTrigger.batch(".project-card", {
+                    onEnter: (elements) => {
+                        gsap.to(elements, {
+                            opacity: 1,
+                            y: 0,
+                            stagger: 0.1,
+                            duration: 0.8,
+                            ease: "power3.out",
+                        });
+                    },
+                    start: "top 85%",
+                });
+
+                // Skill Items Animation
+                ScrollTrigger.batch(".skill-item", {
+                    onEnter: (elements) => {
+                        gsap.to(elements, {
+                            opacity: 1,
+                            scale: 1,
+                            stagger: 0.05,
+                            duration: 0.5,
+                            ease: "back.out(1.7)",
+                        });
+                    },
+                    start: "top 90%",
+                });
+
+                // Tech Tags Animation
+                ScrollTrigger.batch(".tech-tag", {
+                    onEnter: (elements) => {
+                        gsap.to(elements, {
+                            opacity: 1,
+                            scale: 1,
+                            stagger: 0.03,
+                            duration: 0.4,
+                            ease: "back.out(1.7)",
+                        });
+                    },
+                    start: "top 90%",
+                });
+
+                // Education Items Animation
+                gsap.utils
+                    .toArray(".education-item")
+                    .forEach((item: any, i) => {
+                        gsap.to(item, {
+                            scrollTrigger: {
+                                trigger: item,
+                                start: "top 90%",
+                                toggleActions: "play none none reverse",
+                            },
+                            opacity: 1,
+                            x: 0,
+                            duration: 0.6,
+                            delay: i * 0.1,
+                            ease: "power2.out",
+                        });
+                    });
+
+                // Contact Section Animation
+                gsap.to(".contact-info", {
+                    scrollTrigger: {
+                        trigger: ".contact-section",
+                        start: "top 80%",
+                        toggleActions: "play none none reverse",
+                    },
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    ease: "power3.out",
+                });
+
+                // Contact Info Items Animation
+                gsap.utils.toArray(".info-item").forEach((item: any, i) => {
+                    gsap.to(item, {
+                        scrollTrigger: {
+                            trigger: item,
+                            start: "top 90%",
+                            toggleActions: "play none none reverse",
+                        },
+                        opacity: 1,
+                        x: 0,
+                        duration: 0.6,
+                        delay: i * 0.1,
+                        ease: "power2.out",
+                    });
+                });
+
+                // Social Links Animation
+                ScrollTrigger.batch(".social-link", {
+                    onEnter: (elements) => {
+                        gsap.to(elements, {
+                            opacity: 1,
+                            scale: 1,
+                            stagger: 0.1,
+                            duration: 0.5,
+                            ease: "back.out(1.7)",
+                        });
+                    },
+                    start: "top 90%",
+                });
+
+                // Availability Badge Animation
+                gsap.to(".availability-badge", {
+                    scrollTrigger: {
+                        trigger: ".availability-badge",
+                        start: "top 95%",
+                        toggleActions: "play none none reverse",
+                    },
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.6,
+                    ease: "power2.out",
+                });
+
+                // Parallax effect on profile image
+                gsap.to(".profile-image-wrapper", {
+                    scrollTrigger: {
+                        trigger: ".profile-section",
+                        start: "top top",
+                        end: "bottom top",
+                        scrub: 1,
+                    },
+                    y: 100,
+                    ease: "none",
+                });
+
+                // Header background opacity on scroll
+                gsap.to(".header", {
+                    scrollTrigger: {
+                        trigger: "body",
+                        start: "top top",
+                        end: "100px top",
+                        scrub: true,
+                    },
+                });
+
+                // Floating animation for decorative elements
+                gsap.to(".info-decoration", {
+                    y: -20,
+                    duration: 3,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: "sine.inOut",
+                });
+
+                // Magnetic effect on buttons (optional enhancement)
+                const magneticButtons = document.querySelectorAll(".glass-btn");
+
+                magneticButtons.forEach((btn) => {
+                    btn.addEventListener("mousemove", (e: any) => {
+                        const rect = btn.getBoundingClientRect();
+                        const x = e.clientX - rect.left - rect.width / 2;
+                        const y = e.clientY - rect.top - rect.height / 2;
+
+                        gsap.to(btn, {
+                            x: x * 0.2,
+                            y: y * 0.2,
+                            duration: 0.3,
+                            ease: "power2.out",
+                        });
+                    });
+
+                    btn.addEventListener("mouseleave", () => {
+                        gsap.to(btn, {
+                            x: 0,
+                            y: 0,
+                            duration: 0.5,
+                            ease: "elastic.out(1, 0.5)",
+                        });
+                    });
+                });
+
+                // Text reveal animation for titles
+                gsap.utils.toArray(".section-title").forEach((title: any) => {
+                    gsap.fromTo(
+                        title,
+                        {
+                            backgroundSize: "0% 100%",
+                        },
+                        {
+                            scrollTrigger: {
+                                trigger: title,
+                                start: "top 80%",
+                                toggleActions: "play none none reverse",
+                            },
+                            backgroundSize: "100% 100%",
+                            duration: 1,
+                            ease: "power2.out",
+                        },
+                    );
+                });
+
+                // Refresh ScrollTrigger after all animations are set up
+                ScrollTrigger.refresh();
+            });
+
+            // Handle page visibility changes
+            document.addEventListener("visibilitychange", () => {
+                if (document.hidden) {
+                    lenis.stop();
+                } else {
+                    lenis.start();
+                }
+            });
+        </script>
     </body>
 </html>

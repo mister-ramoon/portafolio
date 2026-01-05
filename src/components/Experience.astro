@@ -243,10 +243,40 @@ const yearsOfExperience = currentYear - startYear;
 </section>
 
 <script>
+    import { gsap } from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+
     // Tab functionality
     document.addEventListener("DOMContentLoaded", () => {
         const tabBtns = document.querySelectorAll(".tab-btn");
         const tabContents = document.querySelectorAll(".tab-content");
+
+        // Function to animate tab content elements
+        const animateTabContent = (tabContent: Element) => {
+            const timelineItems = tabContent.querySelectorAll(".timeline-item");
+            const techTags = tabContent.querySelectorAll(".tech-tag");
+
+            // Reset and animate timeline items
+            gsap.set(timelineItems, { opacity: 0, x: -30 });
+            gsap.to(timelineItems, {
+                opacity: 1,
+                x: 0,
+                duration: 0.6,
+                stagger: 0.1,
+                ease: "power3.out",
+            });
+
+            // Reset and animate tech tags
+            gsap.set(techTags, { opacity: 0, scale: 0.8 });
+            gsap.to(techTags, {
+                opacity: 1,
+                scale: 1,
+                duration: 0.4,
+                stagger: 0.03,
+                delay: 0.3,
+                ease: "back.out(1.7)",
+            });
+        };
 
         tabBtns.forEach((btn) => {
             btn.addEventListener("click", () => {
@@ -258,9 +288,15 @@ const yearsOfExperience = currentYear - startYear;
 
                 // Add active class to clicked button and corresponding content
                 btn.classList.add("active");
-                document
-                    .getElementById(`tab-${tabId}`)
-                    ?.classList.add("active");
+                const activeTab = document.getElementById(`tab-${tabId}`);
+                activeTab?.classList.add("active");
+
+                // Animate the new tab content
+                if (activeTab) {
+                    animateTabContent(activeTab);
+                    // Refresh ScrollTrigger to detect new elements
+                    ScrollTrigger.refresh();
+                }
             });
         });
     });
