@@ -75,6 +75,7 @@
 
 html {
     scroll-behavior: smooth;
+    text-rendering: optimizeSpeed;
 }
 
 body {
@@ -85,6 +86,13 @@ body {
     line-height: 1.6;
     overflow-x: hidden;
     position: relative;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Main content sections */
+main {
+    contain: layout style;
 }
 
 /* Animated Background Orbs */
@@ -97,6 +105,8 @@ body::after {
     opacity: 0.3;
     z-index: -1;
     animation: float 20s ease-in-out infinite;
+    pointer-events: none;
+    contain: strict;
 }
 
 body::before {
@@ -150,6 +160,7 @@ body::after {
     border-radius: var(--radius-lg);
     box-shadow: var(--glass-shadow);
     transition: all var(--transition-base);
+    contain: layout style paint;
 }
 
 .glass-card:hover {
@@ -157,6 +168,13 @@ body::after {
     border-color: var(--glass-border-hover);
     box-shadow: var(--glass-shadow-hover);
     transform: translateY(-4px);
+}
+
+/* Reduce blur on mobile for better performance */
+@media (max-width: 768px) {
+    :root {
+        --glass-blur: blur(12px);
+    }
 }
 
 /* Neomorphic Elements */
@@ -564,6 +582,75 @@ html.lenis body {
 .tech-tag:hover,
 .skill-item:hover {
     transition: all var(--transition-base);
+}
+
+/* ==========================================
+   Performance Optimizations
+   ========================================== */
+
+/* GPU-accelerated animations with will-change */
+.glass-card,
+.glass-btn,
+.timeline-item,
+.project-card,
+.skill-item,
+.tech-tag,
+.education-item,
+.info-item,
+.profile-content,
+.profile-image-container,
+.profile-image-wrapper {
+    will-change: transform, opacity;
+}
+
+/* Remove will-change after animation completes (handled by GSAP) */
+.animated {
+    will-change: auto;
+}
+
+/* Optimize backdrop-filter performance */
+.glass-card,
+.glass-btn,
+.header {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    body::before,
+    body::after {
+        animation: none !important;
+    }
+
+    .profile-greeting,
+    .profile-title,
+    .profile-description,
+    .profile-actions .glass-btn,
+    .status-badge,
+    .timeline-item,
+    .project-card,
+    .skill-item,
+    .tech-tag,
+    .education-item,
+    .info-item,
+    .contact-info,
+    .availability-badge,
+    .social-link,
+    .glass-card,
+    .section-header {
+        opacity: 1 !important;
+        transform: none !important;
+    }
 }
 
 /* Header Spacer */

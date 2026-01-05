@@ -12,14 +12,29 @@ import Header from "../components/Header.astro";
             name="description"
             content="Portfolio de Ramón Ruiz - Desarrollador Web"
         />
+        <meta name="theme-color" content="#0a0a0f" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <meta name="generator" content={Astro.generator} />
+
+        <!-- Preconnect to external domains -->
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+        <!-- Preload critical fonts -->
         <link
-            href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&family=Sora:wght@100..800&display=swap"
+            rel="preload"
+            href="https://fonts.gstatic.com/s/sora/v12/xMQOuFFYT72X5wkB_18qmnndmSdSnk-DKQJRBg.woff2"
+            as="font"
+            type="font/woff2"
+            crossorigin
+        />
+
+        <!-- Load fonts with display swap -->
+        <link
+            href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Sora:wght@300;400;500;600;700&display=swap"
             rel="stylesheet"
         />
+
         <title>Ramón Ruiz - Portfolio</title>
     </head>
     <body>
@@ -38,27 +53,47 @@ import Header from "../components/Header.astro";
             // Register GSAP plugins
             gsap.registerPlugin(ScrollTrigger);
 
-            // Initialize Lenis for smooth scrolling
-            const lenis = new Lenis({
-                duration: 1.2,
-                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-                orientation: "vertical",
-                gestureOrientation: "vertical",
-                smoothWheel: true,
-                wheelMultiplier: 1,
-                touchMultiplier: 2,
+            // Check for reduced motion preference
+            const prefersReducedMotion = window.matchMedia(
+                "(prefers-reduced-motion: reduce)",
+            ).matches;
+
+            // GSAP Performance defaults
+            gsap.config({
+                force3D: true, // Force GPU acceleration
+                nullTargetWarn: false,
             });
 
-            // Connect Lenis to GSAP ScrollTrigger
-            lenis.on("scroll", ScrollTrigger.update);
-
-            // Add Lenis to GSAP ticker
-            gsap.ticker.add((time) => {
-                lenis.raf(time * 1000);
+            // ScrollTrigger defaults for better performance
+            ScrollTrigger.config({
+                ignoreMobileResize: true,
             });
 
-            // Disable GSAP's lag smoothing
-            gsap.ticker.lagSmoothing(0);
+            // Initialize Lenis for smooth scrolling (skip if reduced motion)
+            let lenis: Lenis | null = null;
+
+            if (!prefersReducedMotion) {
+                lenis = new Lenis({
+                    duration: 1.2,
+                    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                    orientation: "vertical",
+                    gestureOrientation: "vertical",
+                    smoothWheel: true,
+                    wheelMultiplier: 1,
+                    touchMultiplier: 2,
+                });
+
+                // Connect Lenis to GSAP ScrollTrigger
+                lenis.on("scroll", ScrollTrigger.update);
+
+                // Add Lenis to GSAP ticker
+                gsap.ticker.add((time) => {
+                    lenis?.raf(time * 1000);
+                });
+
+                // Disable GSAP's lag smoothing
+                gsap.ticker.lagSmoothing(0);
+            }
 
             // Make lenis globally available
             (window as any).lenis = lenis;
@@ -71,21 +106,41 @@ import Header from "../components/Header.astro";
                     if (href) {
                         const target = document.querySelector(href);
                         if (target) {
-                            lenis.scrollTo(target as HTMLElement, {
-                                offset: -80,
-                                duration: 1.5,
-                            });
+                            if (lenis) {
+                                lenis.scrollTo(target as HTMLElement, {
+                                    offset: -80,
+                                    duration: 1.5,
+                                });
+                            } else {
+                                // Fallback for reduced motion
+                                target.scrollIntoView({ behavior: "auto" });
+                            }
                         }
                     }
                 });
             });
 
             // ==========================================
-            // GSAP Animations
+            // GSAP Animations (skip if reduced motion)
             // ==========================================
 
             // Wait for DOM to be ready
             document.addEventListener("DOMContentLoaded", () => {
+                // Skip animations if user prefers reduced motion
+                if (prefersReducedMotion) {
+                    // Show all elements immediately
+                    gsap.set(
+                        ".profile-content, .profile-image-container, .glass-card, .section-header, .profile-greeting, .profile-title, .profile-description, .profile-actions .glass-btn, .status-badge, .timeline-item, .project-card, .skill-item, .tech-tag, .education-item, .info-item, .contact-info, .availability-badge, .social-link",
+                        {
+                            opacity: 1,
+                            x: 0,
+                            y: 0,
+                            scale: 1,
+                        },
+                    );
+                    return;
+                }
+
                 // Set initial states
                 gsap.set(".profile-content, .profile-image-container", {
                     opacity: 0,
@@ -421,11 +476,19 @@ import Header from "../components/Header.astro";
 
             // Handle page visibility changes
             document.addEventListener("visibilitychange", () => {
-                if (document.hidden) {
-                    lenis.stop();
-                } else {
-                    lenis.start();
+                if (lenis) {
+                    if (document.hidden) {
+                        lenis.stop();
+                    } else {
+                        lenis.start();
+                    }
                 }
+            });
+
+            // Cleanup on page unload (for SPAs)
+            window.addEventListener("beforeunload", () => {
+                ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+                lenis?.destroy();
             });
         </script>
     </body>
