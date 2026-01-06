@@ -4,7 +4,9 @@ import { Image } from "astro:assets";
 import { ExternalLink, Github, Folder, Star } from "@lucide/astro";
 
 // Import project images
-import ProjectImage from "../assets/image.png";
+import ProjectImage1 from "../assets/project-1.png";
+import ProjectImage2 from "../assets/project-2.png";
+import ProjectImage3 from "../assets/project-3.png";
 
 //  Typescript interface for Project
 interface Project {
@@ -26,10 +28,10 @@ const projects: Project[] = [
         title: "Portfolio",
         description:
             "Mí sitio web personal para mostrar mis proyectos, habilidades y experiencia como desarrollador web.",
-        image: ProjectImage, // TODO
+        image: ProjectImage1, 
         technologies: ["Astro", "TypeScript", "CSS", "JavaScript"],
         liveUrl: "https://taskapp-demo.com", // TODO
-        repoUrl: "https://github.com/tu-usuario/taskapp", // TODO
+        repoUrl: "https://github.com/mister-ramoon/portafolio", 
         featured: true,
         category: "web",
     },
@@ -38,10 +40,10 @@ const projects: Project[] = [
         title: "NASA OPEN API",
         description:
             "Aplicación web que consume su API pública de la NASA para mostrar imágenes diarias, datos de misiones y eventos astronómicos.",
-        image: ProjectImage, // TODO
+        image: ProjectImage2, 
         technologies: ["Next.js", "TypeScript", "Tailwind CSS", "React"],
-        liveUrl: "https://ecommerce-demo.com", // TODO
-        repoUrl: "https://github.com/tu-usuario/ecommerce", // TODO
+        liveUrl: "https://nasa-open.vercel.app/",
+        repoUrl: "https://github.com/mister-ramoon/nasa-open",
         featured: true,
         category: "web",
     },
@@ -50,10 +52,10 @@ const projects: Project[] = [
         title: "Springfield-DB",
         description:
             "Aplicación web para consultar información sobre personajes, episodios y ubicaciones de la serie Los Simpson utilizando una API pública.",
-        image: ProjectImage, // TODO
+        image: ProjectImage3, 
         technologies: ["Vite.js", "JavaScript", "CSS", "Fetch API"],
-        liveUrl: "https://weather-demo.com", // TODO
-        repoUrl: "https://github.com/tu-usuario/weather", // TODO
+        liveUrl: "https://springfield-db.vercel.app/",
+        repoUrl: "https://github.com/mister-ramoon/Springfield-DB/tree/main",
         featured: true,
         category: "web",
     },
@@ -62,10 +64,9 @@ const projects: Project[] = [
         title: "Google Clone",
         description:
             "Clon de la página principal de Google con funcionalidades básicas de búsqueda y diseño responsivo.",
-        image: ProjectImage, // TODO
         technologies: ["HTML", "JavaScript", "CSS"],
-        liveUrl: "https://tu-portfolio.com", // TODO
-        repoUrl: "https://github.com/tu-usuario/portfolio", // TODO
+        liveUrl: "https://mister-ramoon.github.io/google-clone/", 
+        repoUrl: "https://github.com/mister-ramoon/google-clone",
         featured: false,
         category: "web",
     },
@@ -74,10 +75,9 @@ const projects: Project[] = [
         title: "Platzi Video",
         description:
             "Web estatica de una plataforma de streaming de video similar a Netflix, con catálogo de películas y series.",
-        image: ProjectImage, // TODO
-        technologies: ["HTML", "JavaScript", "CSS"], // TODO
-        liveUrl: "https://chat-demo.com", // TODO
-        repoUrl: "https://github.com/tu-usuario/chat-app", // TODO
+        technologies: ["HTML", "JavaScript", "CSS"], 
+        liveUrl: "https://mister-ramoon.github.io/platzi-video-frontend/platzi-video/",
+        repoUrl: "https://github.com/mister-ramoon/platzi-video-frontend",
         featured: false,
         category: "web",
     },
