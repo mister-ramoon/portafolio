@@ -5,8 +5,8 @@ import { Download, Linkedin, Github } from "@lucide/astro";
 import "../styles/profile.css";
 
 // Links of social media and CV
-const LINKEDIN_URL = "https://linkedin.com/in/tu-usuario";
-const GITHUB_URL = "https://github.com/tu-usuario";
+const LINKEDIN_URL = "https://www.linkedin.com/in/misterramon/";
+const GITHUB_URL = "https://github.com/mister-ramoon";
 const CV_URL = "/cv-ramon-ruiz.pdf";
 ---
 
@@ -18,11 +18,11 @@ const CV_URL = "/cv-ramon-ruiz.pdf";
             <span class="highlight">Ramón Ruiz</span>
         </h1>
         <p class="profile-description">
-            Desarrollador Web apasionado por crear experiencias digitales
-            únicas. Bienvenido a mi sitio web personal, donde comparto mis
-            proyectos, habilidades y experiencia en desarrollo web.
+            Desarrollador Full-Stack especializado en Front-end, con más de 5
+            años de experiencia creando productos para la web.
         </p>
         <div class="profile-actions">
+            <!-- TODO: MAKE CV DOWNLOAD FUNCTIONAL -->
             <a href={CV_URL} class="glass-btn glass-btn-primary" download>
                 <Download class="icon" />
                 Descargar CV

@@ -17,93 +17,69 @@ interface Project {
     repoUrl?: string;
     featured?: boolean;
     category: "web" | "mobile" | "api" | "other";
-    year: number;
 }
 
 // Projects Data
 const projects: Project[] = [
     {
         id: "project-1",
-        title: "E-Commerce Platform",
+        title: "Portfolio",
         description:
-            "Plataforma de comercio electrónico completa con carrito de compras, pasarela de pagos Stripe, gestión de inventario y panel de administración.",
-        image: ProjectImage,
-        technologies: [
-            "Next.js",
-            "TypeScript",
-            "Stripe",
-            "PostgreSQL",
-            "Tailwind CSS",
-        ],
-        liveUrl: "https://ecommerce-demo.com",
-        repoUrl: "https://github.com/tu-usuario/ecommerce",
+            "Mí sitio web personal para mostrar mis proyectos, habilidades y experiencia como desarrollador web.",
+        image: ProjectImage, // TODO
+        technologies: ["Astro", "TypeScript", "CSS", "JavaScript"],
+        liveUrl: "https://taskapp-demo.com", // TODO
+        repoUrl: "https://github.com/tu-usuario/taskapp", // TODO
         featured: true,
         category: "web",
-        year: 2025,
     },
     {
         id: "project-2",
-        title: "Task Management App",
+        title: "NASA OPEN API",
         description:
-            "Aplicación de gestión de tareas con drag & drop, colaboración en tiempo real, notificaciones y sincronización entre dispositivos.",
-        image: ProjectImage,
-        technologies: ["React", "Node.js", "Socket.io", "MongoDB", "Redis"],
-        liveUrl: "https://taskapp-demo.com",
-        repoUrl: "https://github.com/tu-usuario/taskapp",
+            "Aplicación web que consume su API pública de la NASA para mostrar imágenes diarias, datos de misiones y eventos astronómicos.",
+        image: ProjectImage, // TODO
+        technologies: ["Next.js", "TypeScript", "Tailwind CSS", "React"],
+        liveUrl: "https://ecommerce-demo.com", // TODO
+        repoUrl: "https://github.com/tu-usuario/ecommerce", // TODO
         featured: true,
         category: "web",
-        year: 2024,
     },
     {
         id: "project-3",
-        title: "Weather Dashboard",
+        title: "Springfield-DB",
         description:
-            "Dashboard interactivo con datos meteorológicos en tiempo real, pronósticos de 7 días, mapas interactivos y alertas personalizadas.",
-        image: ProjectImage,
-        technologies: ["Vue.js", "D3.js", "OpenWeather API", "Mapbox"],
-        liveUrl: "https://weather-demo.com",
-        repoUrl: "https://github.com/tu-usuario/weather",
-        featured: false,
+            "Aplicación web para consultar información sobre personajes, episodios y ubicaciones de la serie Los Simpson utilizando una API pública.",
+        image: ProjectImage, // TODO
+        technologies: ["Vite.js", "JavaScript", "CSS", "Fetch API"],
+        liveUrl: "https://weather-demo.com", // TODO
+        repoUrl: "https://github.com/tu-usuario/weather", // TODO
+        featured: true,
         category: "web",
-        year: 2024,
     },
     {
         id: "project-4",
-        title: "REST API Boilerplate",
+        title: "Google Clone",
         description:
-            "Template de API REST con autenticación JWT, validación, rate limiting, documentación Swagger y tests automatizados.",
-        image: ProjectImage,
-        technologies: ["Node.js", "Express", "TypeScript", "Jest", "Swagger"],
-        repoUrl: "https://github.com/tu-usuario/api-boilerplate",
+            "Clon de la página principal de Google con funcionalidades básicas de búsqueda y diseño responsivo.",
+        image: ProjectImage, // TODO
+        technologies: ["HTML", "JavaScript", "CSS"],
+        liveUrl: "https://tu-portfolio.com", // TODO
+        repoUrl: "https://github.com/tu-usuario/portfolio", // TODO
         featured: false,
-        category: "api",
-        year: 2023,
+        category: "web",
     },
     {
         id: "project-5",
-        title: "Portfolio Website",
+        title: "Platzi Video",
         description:
-            "Sitio web personal con diseño Liquid Glass, animaciones fluidas, modo oscuro y optimización SEO.",
-        image: ProjectImage,
-        technologies: ["Astro", "TypeScript", "CSS3", "Lucide Icons"],
-        liveUrl: "https://tu-portfolio.com",
-        repoUrl: "https://github.com/tu-usuario/portfolio",
-        featured: true,
-        category: "web",
-        year: 2025,
-    },
-    {
-        id: "project-6",
-        title: "Chat Application",
-        description:
-            "Aplicación de chat en tiempo real con salas privadas, compartir archivos, emojis y notificaciones push.",
-        image: ProjectImage,
-        technologies: ["React", "Firebase", "WebRTC", "Tailwind CSS"],
-        liveUrl: "https://chat-demo.com",
-        repoUrl: "https://github.com/tu-usuario/chat-app",
+            "Web estatica de una plataforma de streaming de video similar a Netflix, con catálogo de películas y series.",
+        image: ProjectImage, // TODO
+        technologies: ["HTML", "JavaScript", "CSS"], // TODO
+        liveUrl: "https://chat-demo.com", // TODO
+        repoUrl: "https://github.com/tu-usuario/chat-app", // TODO
         featured: false,
         category: "web",
-        year: 2023,
     },
 ];
 
@@ -173,7 +149,6 @@ const otherProjects = projects.filter((p) => !p.featured);
                                         )}
                                     </div>
                                 </div>
-                                <span class="project-year">{project.year}</span>
                             </div>
                             <div class="project-content">
                                 <h4 class="project-title">{project.title}</h4>
@@ -250,9 +225,6 @@ const otherProjects = projects.filter((p) => !p.featured);
                                             </span>
                                         ))}
                                 </div>
-                                <span class="project-year-small">
-                                    {project.year}
-                                </span>
                             </div>
                         </article>
                     ))}
