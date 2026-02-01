@@ -7,7 +7,7 @@ import "../styles/profile.css";
 // Links of social media and CV
 const LINKEDIN_URL = "https://www.linkedin.com/in/misterramon/";
 const GITHUB_URL = "https://github.com/mister-ramoon";
-const CV_URL = "/cv-ramon-ruiz.pdf";
+const CV_URL = "https://drive.google.com/file/d/17lXXdSjYFZJYqKOlTPG9wqfjOkDQ6ghv/view";
 ---
 
 <section class="profile-section" id="profile">
@@ -22,8 +22,12 @@ const CV_URL = "/cv-ramon-ruiz.pdf";
             años de experiencia creando productos para la web.
         </p>
         <div class="profile-actions">
-            <!-- TODO: MAKE CV DOWNLOAD FUNCTIONAL -->
-            <a href={CV_URL} class="glass-btn glass-btn-primary" download>
+            <a 
+                href={CV_URL} 
+                class="glass-btn glass-btn-primary" 
+                target="_blank"
+                rel="noopener noreferrer"
+            >
                 <Download class="icon" />
                 Descargar CV
             </a>
